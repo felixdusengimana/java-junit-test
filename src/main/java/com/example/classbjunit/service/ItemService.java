@@ -1,6 +1,7 @@
 package com.example.classbjunit.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,4 +25,12 @@ public class ItemService {
 		return items;
 	}
 
+	public Item getById(int id) {
+		Optional<Item> item = itemRepository.findById(id);
+
+		if(item.isPresent()) {
+			return item.get();
+		}
+		return null;
+	}
 }

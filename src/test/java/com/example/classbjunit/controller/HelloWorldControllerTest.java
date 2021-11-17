@@ -1,4 +1,4 @@
-package com.example.classbjunit.service;
+package com.example.classbjunit.controller;
 
 import com.example.classbjunit.controller.HelloWorldController;
 import org.junit.Test;

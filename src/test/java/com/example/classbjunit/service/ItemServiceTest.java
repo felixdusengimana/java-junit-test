@@ -18,7 +18,7 @@ public class ItemServiceTest {
     private ItemService itemService;
     @Test
     public void getAll_withSomeElements(){
-        when(itemRepositoryMock.findAll()).thenReturn(Arrays.asList(new Item(1,"Mike",10,10)));
+        when(itemRepositoryMock.findAll()).thenReturn(Arrays.asList(new Item(1,"Mike",1,10)));
         assertEquals(10,itemService.getAll().get(0).getPrice());
     }
 }
