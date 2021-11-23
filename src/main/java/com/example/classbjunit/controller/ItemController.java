@@ -3,15 +3,17 @@ package com.example.classbjunit.controller;
 import java.util.List;
 import java.util.Optional;
 
+import com.example.classbjunit.dto.ItemDTO;
+import com.example.classbjunit.util.APIResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.example.classbjunit.model.Item;
 import com.example.classbjunit.service.ItemService;
+
+import javax.validation.Valid;
 
 @RestController
 public class ItemController {
@@ -32,7 +34,16 @@ public class ItemController {
 		if(item != null)  {
 			return ResponseEntity.status(HttpStatus.OK).body(item);
 		}
-		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new APIResponse(false, "Item not found"));
+	}
 
+	@PostMapping("/add-item")
+	public ResponseEntity<?> saveItem(@Valid @RequestBody ItemDTO itemDTO){
+      Item itemSaved = itemService.save(itemDTO);
+		System.out.println(itemDTO.getName());
+      if(itemSaved!=null){
+      	return ResponseEntity.status(HttpStatus.CREATED).body(itemSaved);
+	  }
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new APIResponse(false, "Item not created"));
 	}
 }
